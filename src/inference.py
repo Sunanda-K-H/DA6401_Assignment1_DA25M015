@@ -38,7 +38,7 @@ def parse_arguments():
                         choices=['random', 'xavier'])
     parser.add_argument('-l', '--loss', type=str, default='cross_entropy',
                         choices=['cross_entropy', 'mse'])
-
+    parser.add_argument("-nhl", "--num_layers", type=int, default=None)
     return parser.parse_args()
 
 
