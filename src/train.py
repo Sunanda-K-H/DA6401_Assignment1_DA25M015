@@ -58,6 +58,13 @@ def main():
     Main training function.
     """
     args = parse_arguments()
+    
+    if args.num_layers is not None:
+    if len(args.hidden_size) == 1:
+        args.hidden_size = args.hidden_size * args.num_layers
+    elif len(args.hidden_size) != args.num_layers:
+        raise ValueError("Length of hidden_size must match num_layers or be a single value.")
+        
     wandb.init(project=args.wandb_project, config=vars(args))
     config = wandb.config
     X_train, X_val, X_test, y_train, y_val, y_test = load_dataset(args.dataset)
