@@ -1,4 +1,4 @@
-from tensorflow.keras.datasets import mnist, fashion_mnist
+from keras.datasets import mnist, fashion_mnist
 from sklearn.model_selection import train_test_split
 import numpy as np
 
