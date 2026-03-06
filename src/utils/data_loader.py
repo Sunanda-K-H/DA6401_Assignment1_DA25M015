@@ -14,16 +14,22 @@ def one_hot(y, num_classes=10):
 
 
 def load_dataset(name="mnist", val_size=0.1, random_state=42):
-
     if name == "mnist":
-        data = fetch_openml("mnist_784", version=1, as_frame=False)
-
+        data = fetch_openml(
+            "mnist_784",
+            version=1,
+            as_frame=False,
+            parser="liac-arff",
+        )
     elif name == "fashion_mnist":
-        data = fetch_openml("Fashion-MNIST", version=1, as_frame=False)
-
+        data = fetch_openml(
+            "Fashion-MNIST",
+            version=1,
+            as_frame=False,
+            parser="liac-arff",
+        )
     else:
         raise ValueError("Dataset must be 'mnist' or 'fashion_mnist'")
-
     X = data.data
     y = data.target.astype(int)
 
