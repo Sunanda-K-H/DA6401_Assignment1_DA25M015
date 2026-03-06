@@ -105,14 +105,15 @@ def main():
             model.backward(grad)
             if iteration < 50:
                 grad_log = {}
-                for j in range(5):
+                num_neurons_to_log = min(5, model.layers[0].grad_W.shape[1])
+            
+                for j in range(num_neurons_to_log):
                     grad_log[f"neuron_{j}_grad_norm"] = np.linalg.norm(model.layers[0].grad_W[:, j])
-
+            
                 wandb.log({
                     "iteration": iteration,
                     **grad_log
                 })
-
             iteration += 1
             epoch_grad_norm += np.linalg.norm(model.layers[0].grad_W)
             optimizer.step(model.layers)
