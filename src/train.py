@@ -49,7 +49,7 @@ def parse_arguments():
     parser.add_argument('--model_save_path', type=str, default='best_model.npy')
 
     parser.add_argument('--config_save_path', type=str, default='best_config.json')
-
+    parser.add_argument("--num_layers", type=int, default=2)
     return parser.parse_args()
 
 
