@@ -1,0 +1,46 @@
+program: src.train
+method: random
+metric:
+  name: val_acc
+  goal: maximize
+
+command:
+  - ${env}
+  - ${interpreter}
+  - -m
+  - ${program}
+  - ${args}
+
+parameters:
+  wandb_project:
+    value: da6401_assignment_1
+
+  dataset:
+    values: ["mnist"]
+
+  epochs:
+    values: [5, 10]
+
+  batch_size:
+    values: [32, 64, 128]
+
+  learning_rate:
+    values: [0.001, 0.01, 0.05]
+
+  optimizer:
+    values: ["sgd", "momentum", "nag", "rmsprop"]
+
+  hidden_size:
+    values: [64, 128, 256]
+
+  activation:
+    values: ["relu", "sigmoid", "tanh"]
+
+  loss:
+    values: ["cross_entropy", "mse"]
+
+  weight_init:
+    values: ["random", "xavier"]
+
+  weight_decay:
+    values: [0.0, 0.0001]
