@@ -60,10 +60,10 @@ def main():
     args = parse_arguments()
     
     if args.num_layers is not None:
-    if len(args.hidden_size) == 1:
-        args.hidden_size = args.hidden_size * args.num_layers
-    elif len(args.hidden_size) != args.num_layers:
-        raise ValueError("Length of hidden_size must match num_layers or be a single value.")
+        if len(args.hidden_size) == 1:
+            args.hidden_size = args.hidden_size * args.num_layers
+        elif len(args.hidden_size) != args.num_layers:
+            raise ValueError("Length of hidden_size must match num_layers or be a single value.")
         
     wandb.init(project=args.wandb_project, config=vars(args))
     config = wandb.config
