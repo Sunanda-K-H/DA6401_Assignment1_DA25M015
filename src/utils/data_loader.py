@@ -1,50 +1,33 @@
-import numpy as np
+from tensorflow.keras.datasets import mnist, fashion_mnist
 from sklearn.model_selection import train_test_split
-from sklearn.datasets import fetch_openml
-
+import numpy as np
 
 def preprocess(x):
-    x = x.astype("float32") / 255.0
-    return x
+    n = x.shape[0]
+    return x.reshape(n, -1).astype("float32") / 255.0
 
 
 def one_hot(y, num_classes=10):
-    y = y.astype(int)
     return np.eye(num_classes)[y]
 
 
 def load_dataset(name="mnist", val_size=0.1, random_state=42):
     if name == "mnist":
-        data = fetch_openml(
-            "mnist_784",
-            version=1,
-            as_frame=False,
-            parser="liac-arff",
-        )
+        (x_train_full, y_train_full), (X_test, y_test) = mnist.load_data()
     elif name == "fashion_mnist":
-        data = fetch_openml(
-            "Fashion-MNIST",
-            version=1,
-            as_frame=False,
-            parser="liac-arff",
-        )
+        (x_train_full, y_train_full), (X_test, y_test) = fashion_mnist.load_data()
     else:
         raise ValueError("Dataset must be 'mnist' or 'fashion_mnist'")
-    X = data.data
-    y = data.target.astype(int)
 
-    X = preprocess(X)
-
-    X_train_full, X_test, y_train_full, y_test = train_test_split(
-        X, y, test_size=10000, stratify=y, random_state=random_state
-    )
+    x_train_full = preprocess(x_train_full)
+    X_test = preprocess(X_test)
 
     X_train, X_val, y_train, y_val = train_test_split(
-        X_train_full,
+        x_train_full,
         y_train_full,
         test_size=val_size,
-        stratify=y_train_full,
         random_state=random_state,
+        stratify=y_train_full,
     )
 
     y_train = one_hot(y_train)
